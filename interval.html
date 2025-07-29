@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>Παράδειγμα setInterval</title>
+  <link rel="stylesheet" href="css/interval.css">
+</head>
+<body>
+  <div class="container">
+  <h2>Παράδειγμα setInterval με Start/Stop</h2>
+  
+  <div id="output">Πατήστε "Start" για να ξεκινήσει το interval.</div>
+  <button id="startBtn">Start</button>
+  <button id="stopBtn" disabled>Stop</button>
+  <button id="resetBtn">Reset</button>
+  </div>
+  <script>
+    let intervalId = null;
+    let count = 0;
+
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const output = document.getElementById('output');
+
+    startBtn.addEventListener('click', () => {
+      if (intervalId === null) {
+        intervalId = setInterval(() => {
+          count++;
+          output.textContent = `Το interval τρέχει για ${count} δευτερόλεπτα`;
+        }, 1000);
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+        output.textContent = `Το interval σταμάτησε στα ${count} δευτερόλεπτα.`;
+        count = 0;
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+        if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      count = 0;
+      output.textContent = 'Το interval μηδενίστηκε. Πατήστε "Start" για να ξεκινήσει.';
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>
